@@ -5,6 +5,7 @@ using Bot.Common.Dto;
 using Bot.Common.Enums;
 using Bot.Models.Data;
 using Bot.Models.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bot.BusinessLogic.Services.Implementations
 {
@@ -33,6 +34,12 @@ namespace Bot.BusinessLogic.Services.Implementations
             var categories = query.ToList();
             var categoriesDto = Mapper.Map<List<CategoryDto>>(categories);
             return categoriesDto!;
+        }
+        public List<CategoryDto> Get()
+        {
+            var categories = _context.Categories.AsNoTracking().ToList();
+            var categoriesDto = Mapper.Map<List<CategoryDto>>(categories);
+            return categoriesDto;
         }
     }
 }

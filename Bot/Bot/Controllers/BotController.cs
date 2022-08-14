@@ -44,17 +44,16 @@ namespace Bot.Controllers
         public async Task HandleCallbackQuery(ITelegramBotClient botClient,
             CallbackQuery callbackQuery)
         {
-            List<CategoryDto> list = _categoryType.Get(1);
-            _buttonHendler.PageCount = Convert.ToInt32(Math.Round((double)list.Count / 3));
+            List<CategoryDto> list = _categoryType.Get();
 
             if (callbackQuery.Data.StartsWith("category_next"))
             {
-                await _buttonHendler.NextPage(botClient, callbackQuery, list, _buttonService);
+                await _buttonHendler.NextPage(botClient, callbackQuery, _buttonService);
                 return;
             }
             if (callbackQuery.Data.StartsWith("category_back"))
             {
-                await _buttonHendler.BackPage(botClient, callbackQuery, list, _buttonService);
+                await _buttonHendler.BackPage(botClient, callbackQuery, _buttonService);
                 return;
             }
             foreach (var item in list)
@@ -64,13 +63,11 @@ namespace Bot.Controllers
                     OperationService.CategoryId = item.Id;
                     await botClient.SendTextMessageAsync(
                     callbackQuery.Message.Chat.Id,
-                    "Введите количество заработанных средств, используя тег /ic-сумма\n /ic-2500",
+                    "Введите количество заработанных средств, используя тег /m-сумма\n /m-2500",
                     replyMarkup:_buttonService.MenuButtonBack());
                     return;
                 }
             }
-            
-            
             await botClient.SendTextMessageAsync(
                 callbackQuery.Message.Chat.Id,
                 $"You choose with data: {callbackQuery.Data}");

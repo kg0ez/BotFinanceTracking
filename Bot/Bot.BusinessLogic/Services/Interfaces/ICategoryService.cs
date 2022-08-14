@@ -10,6 +10,7 @@ namespace Bot.BusinessLogic.Services.Interfaces
 		List<CategoryDto> Get(int type);
 		int Add(string category, OperationType type);
         IMapper Mapper { get; set; }
+		List<CategoryDto> Get();
 	}
 }
 
