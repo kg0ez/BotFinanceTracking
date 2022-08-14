@@ -15,7 +15,7 @@ namespace Bot.Helper.Handler
         public async Task NextPage(ITelegramBotClient bot, CallbackQuery callbackQuery, List<CategoryDto> list, IButtonService buttonService)
         {
             _pageNumber++;
-            if (_pageNumber > 3)
+            if (_pageNumber > PageCount)
             {
                 _pageNumber = 3;
                 return;

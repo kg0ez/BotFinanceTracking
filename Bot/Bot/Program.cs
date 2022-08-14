@@ -13,8 +13,8 @@ var serviceProvider = new ServiceCollection()
             .AddLogging()
             .AddSingleton<IButtonService, ButtonService>()
             .AddSingleton<IErrorService,ErrorService>()
-            .AddSingleton<ICategoryType, CategoryType>()
-            //.AddSingleton<IContentService,ContentService>()
+            .AddSingleton<ICategoryService, CategoryService>()
+            .AddSingleton<IOperationService,OperationService>()
             .BuildServiceProvider();
 var mapperConfiguration = new MapperConfiguration(x =>
 {
@@ -26,11 +26,12 @@ IMapper mapper = mapperConfiguration.CreateMapper();
 //var movieService = serviceProvider.GetService<IMovieService>();
 var errorService = serviceProvider.GetService<IErrorService>();
 var buttonService = serviceProvider.GetService<IButtonService>();
-var categoryService = serviceProvider.GetService<ICategoryType>();
+var categoryService = serviceProvider.GetService<ICategoryService>();
+var operationService = serviceProvider.GetService<IOperationService>();
 
 categoryService.Mapper = mapper;
 //movieService.ContentService = contentServices;
-var botController = new BotController(buttonService,categoryService);
+var botController = new BotController(buttonService,categoryService,operationService);
 
 var botClient = new TelegramBotClient("5588306325:AAGxT9g--Yggo0qkaHzNsYa1rDmDh3SoNvc");
 

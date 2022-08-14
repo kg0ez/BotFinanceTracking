@@ -1,4 +1,5 @@
 ﻿using Bot.BusinessLogic.Helper;
+using Bot.BusinessLogic.Services.Implementations;
 using Bot.BusinessLogic.Services.Interfaces;
 using Bot.Common.Dto;
 using Bot.Services.Interfaces;
@@ -10,36 +11,48 @@ namespace Bot.Helper.Handler
 	public class MessageHendler
 	{
         private readonly IButtonService _buttonService;
-        private readonly ICategoryType _categoryType;
+        private readonly ICategoryService _categoryType;
+        private readonly IOperationService _operationService;
 
-        public MessageHendler(IButtonService buttonService,ICategoryType categoryType)
+        private ReplyKeyboardMarkup _mainKeyboard { get; }
+        private ReplyKeyboardMarkup _accountingKeyboard { get; }
+
+        public MessageHendler(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService)
         {
             _buttonService = buttonService;
             _categoryType = categoryType;
+            _operationService = operationService;
+            _mainKeyboard = _buttonService.MenuButton(
+                    new KeyboardButton[] { "💸 Добавить расходы", "💰 Добавить доходы" },
+                new KeyboardButton[] { "📄 Моя таблица", "👥 Совместный учет" },
+                new KeyboardButton[] { "⚙️ Настройки" });
+            _accountingKeyboard = _buttonService.MenuButton(
+                    new KeyboardButton[] { "Выбрать категорию", "Добавить категорию" },
+                    new KeyboardButton[] { "На главную" }
+                    );
         }
 
         public async Task HandleMessage(ITelegramBotClient botClient, Message message)
         {
             if (message.Text == "/start" || message.Text =="На главную")
             {
-                ReplyKeyboardMarkup keyboard = _buttonService.MenuButton(
-                    new KeyboardButton[] { "💸 Добавить расходы", "💰 Добавить доходы" },
-                new KeyboardButton[] { "📄 Моя таблица", "👥 Совместный учет" },
-                new KeyboardButton[] { "⚙️ Настройки" });
                 if (message.Text == "/start")
                     await botClient.SendTextMessageAsync(message.Chat.Id, "Добро пожаловать! Я буду вести учёт ваших доходов и расходов! ",
-                    replyMarkup: keyboard);
+                    replyMarkup: _mainKeyboard);
                 else
-                    await botClient.SendTextMessageAsync(message.Chat.Id,"Вы вернулись на главную страницу", replyMarkup: keyboard);
+                    await botClient.SendTextMessageAsync(message.Chat.Id,"Вы вернулись на главную страницу", replyMarkup: _mainKeyboard);
                     return;
             }
-            if(message.Text == "💰 Добавить доходы" || message.Text == "Назад")
+            if(message.Text == "💰 Добавить доходы" || message.Text == "Назад" || message.Text == "💸 Добавить расходы")
             {
-                ReplyKeyboardMarkup keyboard = _buttonService.MenuButton(
-                    new KeyboardButton[] {"Выбрать категорию", "Добавить категорию"},
-                    new KeyboardButton[] {"На главную"}
-                    );
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Для ввода расходов, пожалуйста, выберите категорию расходов или создайте свою", replyMarkup: keyboard);
+                string text = Environment.NewLine;
+                if (message.Text == "💰 Добавить доходы")
+                    text = "Для ввода доходов, пожалуйста, выберите категорию доходов или создайте свою";
+                else if (message.Text == "💸 Добавить расходы")
+                    text = "Для ввода расходов, пожалуйста, выберите категорию расходов или создайте свою";
+                else
+                    text = "Можете выбрать уже существующую категорию нажав “Выбрать категорию“, или добавить нажав “Добавить категорию“";
+                await botClient.SendTextMessageAsync(message.Chat.Id, text, replyMarkup: _accountingKeyboard);
                 return;
             }
             if(message.Text == "Выбрать категорию")
@@ -54,14 +67,43 @@ namespace Bot.Helper.Handler
                 buttons.Add(_buttonService.CategoryButtons());
                 InlineKeyboardMarkup keyboard = new(buttons);
 
-                _categoryType.PageCount = Convert.ToInt32(Math.Round((double)list.Count / 3));
+                //_categoryType.PageCount = Convert.ToInt32(Math.Round((double)list.Count / 3));
 
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Здесь представлены все имеющиеся категории расходов. Если вы не нашли подходящую для себя категорию, то нажмите кнопку “Назад“ и затем нажмите “Добавить категорию“", replyMarkup: keyboard);
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Здесь представлены все имеющиеся категории доходов. Если вы не нашли подходящую для себя категорию, то нажмите кнопку “Назад“ и затем нажмите “Добавить категорию“", replyMarkup: keyboard);
+                return;
+            }
+            if (message.Text == "Добавить категорию")
+            {
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Здесь вы можете создать категорию доходов. Название может быть написано на любом языке, включать цифры, символы и смайлики“(здесь, как и везде, смайлик(и)). \n Для добавления используйте тег /ct-категория", replyMarkup: _buttonService.MenuButtonBack());
+                return;
+            }
+            if (message.Text.Substring(0, 4)== "/ic-")
+            {
+                //передать имя
+                try
+                {
+                    decimal prise = Convert.ToDecimal(message.Text.Substring(4));
+                    _operationService.Add(prise);
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Успешно выполнено", replyMarkup: _mainKeyboard);
+                }
+                catch (Exception) { }
+                return;
+            }
+            if (message.Text.Substring(0, 4) == "/ct-")
+            {
+                string category = message.Text.Substring(4);
+                int id = _categoryType.Add(category, Common.Enums.OperationType.Income);
+                if (id == 0)
+                {
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Категория не была добавлена", replyMarkup: _mainKeyboard);
+                    return;
+                }
+                OperationService.CategoryId =id;
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Введите количество заработанных средств, используя тег /ic-сумма");
                 return;
             }
             await botClient.SendTextMessageAsync(message.Chat.Id, $"Команда: "+message.Text+" не найдена");
         }
-        
     }
 }
 

@@ -1,47 +1,23 @@
 ﻿using System;
-using AutoMapper;
 using Bot.BusinessLogic.Services.Interfaces;
-using Bot.Common.Dto;
-using Bot.Common.Enums;
 using Bot.Models.Data;
 using Bot.Models.Models;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Bot.BusinessLogic.Services.Implementations
 {
-	public class CategoryType: ICategoryType
+	public class OperationService: IOperationService
 	{
-		private readonly ApplicationContext _context = new ApplicationContext();
-        public int PageCount { get; set; }
-        private int _pageNumber { get; set; } = 1;
-        public IMapper Mapper { get; set; }
+		public static int CategoryId { get; set; }
+		private ApplicationContext _context = new ApplicationContext();
 
-        public List<CategoryDto> Get(int type)
-        {
-            IQueryable<Category> query = _context.Categories;
-            query = query.Where(c => c.Type == (OperationType)type);
-            var categories = query.ToList();
-            var categoriesDto = Mapper.Map<List<CategoryDto>>(categories);
-            return categoriesDto!;
+		public void Add(decimal price,string name = "Kirill")
+		{
+            var operation = new Operation { CategoryId = CategoryId, Price = price, NameUser = "Kirill" };
+            _context.Operations.Add(operation);
+            _context.SaveChanges();
         }
 
-        public async Task NextPage(ITelegramBotClient bot, CallbackQuery callbackQuery,List<CategoryDto> list, List<InlineKeyboardButton> buttons)
-        {
-            _pageNumber++;
-            if (_pageNumber<=3)
-            {
-                List<List<InlineKeyboardButton>> categoryButtons = new List<List<InlineKeyboardButton>>();
 
-                for (int i = 0; i < 3; i++)
-                    categoryButtons.Add(new List<InlineKeyboardButton> { InlineKeyboardButton.WithCallbackData(list[i].Name, list[i].Name) });
-                categoryButtons.Add(buttons);
-                InlineKeyboardMarkup keyboard = new(categoryButtons);
-                await bot.EditMessageTextAsync(callbackQuery.Message.Chat.Id, callbackQuery.Message.MessageId, "Здесь представлены все имеющиеся категории расходов. Если вы не нашли подходящую для себя категорию, то нажмите кнопку “Назад“ и затем нажмите “Добавить категорию“", replyMarkup: keyboard);
-            }
-            return;
-        }
         public List<Operation> Get()
         {
             //var list = new List<Category> {

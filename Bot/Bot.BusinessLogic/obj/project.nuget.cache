@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kiBLQer8J+BmIEGl9JikA1NVvs1rrBqmQFAwaEkGl/LYUEcsa86mIuWS9bHQa0XFMA9S200HdUEgUvL4y/Weqw==",
+  "dgSpecHash": "0pIrGUUUh33mgRnDPtw8OpTgh2jjGhB4p2RRbFKqydmCneTYU67De94l+6vkEYY7bAxaCF7+jjwNr1H9UJ8GHA==",
   "success": true,
-  "projectFilePath": "/Users/kirill/Desktop/Finans/Bot/Bot.BusinessLogic/Bot.BusinessLogic.csproj",
+  "projectFilePath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.BusinessLogic/Bot.BusinessLogic.csproj",
   "expectedPackageFiles": [
     "/Users/kirill/.nuget/packages/automapper/11.0.1/automapper.11.0.1.nupkg.sha512",
     "/Users/kirill/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

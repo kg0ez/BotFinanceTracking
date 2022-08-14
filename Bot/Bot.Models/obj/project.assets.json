@@ -1792,11 +1792,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kirill/Desktop/Finans/Bot/Bot.Models/Bot.Models.csproj",
+      "projectUniqueName": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Models/Bot.Models.csproj",
       "projectName": "Bot.Models",
-      "projectPath": "/Users/kirill/Desktop/Finans/Bot/Bot.Models/Bot.Models.csproj",
+      "projectPath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Models/Bot.Models.csproj",
       "packagesPath": "/Users/kirill/.nuget/packages/",
-      "outputPath": "/Users/kirill/Desktop/Finans/Bot/Bot.Models/obj/",
+      "outputPath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Models/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/kirill/.nuget/NuGet/NuGet.Config"
@@ -1811,8 +1811,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/kirill/Desktop/Finans/Bot/Bot.Common/Bot.Common.csproj": {
-              "projectPath": "/Users/kirill/Desktop/Finans/Bot/Bot.Common/Bot.Common.csproj"
+            "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Common/Bot.Common.csproj": {
+              "projectPath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Common/Bot.Common.csproj"
             }
           }
         }

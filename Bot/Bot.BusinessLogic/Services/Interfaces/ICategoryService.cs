@@ -1,17 +1,15 @@
 ﻿using System;
 using AutoMapper;
 using Bot.Common.Dto;
-using Bot.Models.Models;
+using Bot.Common.Enums;
 
 namespace Bot.BusinessLogic.Services.Interfaces
 {
-	public interface ICategoryType
+	public interface ICategoryService
 	{
-		List<Operation> Get();
 		List<CategoryDto> Get(int type);
-
-		IMapper Mapper { get; set; }
-		int PageCount { get; set; }
+		int Add(string category, OperationType type);
+        IMapper Mapper { get; set; }
 	}
 }
 

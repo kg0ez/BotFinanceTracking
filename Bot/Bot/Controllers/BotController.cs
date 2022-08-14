@@ -1,4 +1,5 @@
 ﻿using Bot.BusinessLogic.Helper;
+using Bot.BusinessLogic.Services.Implementations;
 using Bot.BusinessLogic.Services.Interfaces;
 using Bot.Common.Dto;
 using Bot.Helper.Handler;
@@ -12,15 +13,17 @@ namespace Bot.Controllers
     public class BotController
     {
         private readonly IButtonService _buttonService;
-        private readonly ICategoryType _categoryType;
+        private readonly ICategoryService _categoryType;
+        private readonly IOperationService _operationService;
 
         private MessageHendler messageHendler;
 
-        public BotController(IButtonService buttonService,ICategoryType categoryType)
+        public BotController(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService)
         {
             _categoryType = categoryType;
             _buttonService = buttonService;
-            messageHendler = new MessageHendler(_buttonService,_categoryType);
+            _operationService = operationService;
+            messageHendler = new MessageHendler(_buttonService,_categoryType,_operationService);
         }
         public async Task HandleUpdatesAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
@@ -41,18 +44,30 @@ namespace Bot.Controllers
         public async Task HandleCallbackQuery(ITelegramBotClient botClient,
             CallbackQuery callbackQuery)
         {
-            
+            List<CategoryDto> list = _categoryType.Get(1);
+            _buttonHendler.PageCount = Convert.ToInt32(Math.Round((double)list.Count / 3));
+
             if (callbackQuery.Data.StartsWith("category_next"))
             {
-                List<CategoryDto> list = _categoryType.Get(1);
                 await _buttonHendler.NextPage(botClient, callbackQuery, list, _buttonService);
                 return;
             }
             if (callbackQuery.Data.StartsWith("category_back"))
             {
-                List<CategoryDto> list = _categoryType.Get(1);
                 await _buttonHendler.BackPage(botClient, callbackQuery, list, _buttonService);
                 return;
+            }
+            foreach (var item in list)
+            {
+                if (callbackQuery.Data.StartsWith(item.Name))
+                {
+                    OperationService.CategoryId = item.Id;
+                    await botClient.SendTextMessageAsync(
+                    callbackQuery.Message.Chat.Id,
+                    "Введите количество заработанных средств, используя тег /ic-сумма\n /ic-2500",
+                    replyMarkup:_buttonService.MenuButtonBack());
+                    return;
+                }
             }
             
             

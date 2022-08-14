@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "K9wEaxJKd0pJ52ODcW0oRnJfDsYAcXzT5Sg297LpjS1R3XM13Sa9nS0WL2B79Uwt6xBGVyrepX7u1U+flOyZjw==",
+  "dgSpecHash": "rPnkPMnm9pueuKhKKi2a39ps4557DpmetR+omCgv+JUJDqdt8DK5+7fl69JXEMh0HasaggwfRWxAwdlJv/p1iw==",
   "success": true,
-  "projectFilePath": "/Users/kirill/Desktop/Finans/Bot/Bot.Models/Bot.Models.csproj",
+  "projectFilePath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.Models/Bot.Models.csproj",
   "expectedPackageFiles": [
     "/Users/kirill/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/Users/kirill/.nuget/packages/microsoft.data.sqlclient/2.1.4/microsoft.data.sqlclient.2.1.4.nupkg.sha512",
