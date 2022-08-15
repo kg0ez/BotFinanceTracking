@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[11.0.1, )"
             },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.43, )"
+            },
             "Telegram.Bot": {
               "target": "Package",
               "version": "[18.0.0, )"

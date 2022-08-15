@@ -14,6 +14,7 @@ namespace Bot.Helper.Handler
         private readonly IButtonService _buttonService;
         private readonly ICategoryService _categoryType;
         private readonly IOperationService _operationService;
+        private readonly ICurrencyService _currencyService;
 
         private ReplyKeyboardMarkup _mainKeyboard { get; }
         private ReplyKeyboardMarkup _accountingKeyboard { get; }
@@ -21,11 +22,12 @@ namespace Bot.Helper.Handler
         private bool _isActiveIncome { get; set; }
         private bool _isActiveExpenses { get; set; }
 
-        public MessageHendler(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService)
+        public MessageHendler(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService,ICurrencyService currencyService)
         {
             _buttonService = buttonService;
             _categoryType = categoryType;
             _operationService = operationService;
+            _currencyService = currencyService;
             _mainKeyboard = _buttonService.MenuButton(
                     new KeyboardButton[] { "💸 Добавить расходы", "💰 Добавить доходы" },
                 new KeyboardButton[] { "📄 Моя таблица", "👥 Совместный учет" },
@@ -103,19 +105,41 @@ namespace Bot.Helper.Handler
                 await botClient.SendTextMessageAsync(message.Chat.Id, $"Здесь вы можете создать категорию {type}. Название может быть написано на любом языке, включать цифры, символы и смайлики“(здесь, как и везде, смайлик(и)). \n Для добавления используйте тег /ct-категория", replyMarkup: _buttonService.MenuButtonBack());
                 return;
             }
-            if (message.Text.Substring(0, 3)== "/m-")
+            if (message.Text.Length>3 && message.Text.Substring(0, 3)== "/m-")
             {
                 //передать имя
                 try
                 {
-                    decimal prise = Convert.ToDecimal(message.Text.Substring(3));
+                    _operationService.Price = Convert.ToDecimal(message.Text.Substring(3));
+                    ReplyKeyboardMarkup keyboardMarkup = _buttonService.MenuButton(
+                        new KeyboardButton[] { "$", "€" },
+                        new KeyboardButton[] { "Назад", "Добавить" });
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "BYN является валютой по умолчанию, если вы ввели данные в BYN, нажмите “Добавить“. При необходимости " +
+                        "конвертирование выберите “$“ или “€“", replyMarkup: keyboardMarkup);
+                }
+                catch (Exception) { await botClient.SendTextMessageAsync(message.Chat.Id, "Неверный ввод"); }
+                return;
+            }
+            if (message.Text=="Добавить" || message.Text == "$" || message.Text == "€")
+            {
+                decimal coefficient = 1;
+                if (message.Text == "$" || message.Text == "€")
+                    coefficient = _currencyService.Get(message.Text);
+                if (_operationService.Price ==0)
+                { 
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Ошибка");
+                    return;
+                }
+                try
+                {
+                    decimal prise = _operationService.Price * coefficient;
                     _operationService.Add(prise);
                     await botClient.SendTextMessageAsync(message.Chat.Id, "Успешно выполнено", replyMarkup: _mainKeyboard);
                 }
                 catch (Exception) { }
                 return;
             }
-            if (message.Text.Substring(0, 4) == "/ct-")
+            if (message.Text.Length > 4 && message.Text.Substring(0, 4) == "/ct-")
             {
                 string category = message.Text.Substring(4);
                 OperationType type;

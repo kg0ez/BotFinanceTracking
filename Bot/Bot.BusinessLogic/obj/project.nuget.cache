@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "0pIrGUUUh33mgRnDPtw8OpTgh2jjGhB4p2RRbFKqydmCneTYU67De94l+6vkEYY7bAxaCF7+jjwNr1H9UJ8GHA==",
+  "dgSpecHash": "exZkuQ3Y/G4ITxJCS/Hhba7W8E+xHRcBDgk716mxnkOyaL0RcgkTqkxdZgr5EDxzpIx/HXdgaPDbwTpV89ptjw==",
   "success": true,
   "projectFilePath": "/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot.BusinessLogic/Bot.BusinessLogic.csproj",
   "expectedPackageFiles": [
     "/Users/kirill/.nuget/packages/automapper/11.0.1/automapper.11.0.1.nupkg.sha512",
+    "/Users/kirill/.nuget/packages/htmlagilitypack/1.11.43/htmlagilitypack.1.11.43.nupkg.sha512",
     "/Users/kirill/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/Users/kirill/.nuget/packages/microsoft.data.sqlclient/2.1.4/microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "/Users/kirill/.nuget/packages/microsoft.data.sqlclient.sni.runtime/2.1.1/microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",

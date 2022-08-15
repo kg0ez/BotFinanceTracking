@@ -8,7 +8,9 @@ namespace Bot.BusinessLogic.Services.Implementations
 	public class OperationService: IOperationService
 	{
 		public static int CategoryId { get; set; }
-		private ApplicationContext _context = new ApplicationContext();
+        public decimal Price { get; set; }
+
+        private ApplicationContext _context = new ApplicationContext();
 
 		public void Add(decimal price,string name = "Kirill")
 		{

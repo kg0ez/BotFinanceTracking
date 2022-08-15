@@ -18,12 +18,12 @@ namespace Bot.Controllers
 
         private MessageHendler messageHendler;
 
-        public BotController(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService)
+        public BotController(IButtonService buttonService, ICategoryService categoryType,IOperationService operationService,ICurrencyService currencyService)
         {
             _categoryType = categoryType;
             _buttonService = buttonService;
             _operationService = operationService;
-            messageHendler = new MessageHendler(_buttonService,_categoryType,_operationService);
+            messageHendler = new MessageHendler(_buttonService,_categoryType,_operationService,currencyService);
         }
         public async Task HandleUpdatesAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {

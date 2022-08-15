@@ -5,6 +5,7 @@ namespace Bot.BusinessLogic.Services.Interfaces
 	{
 		void Add(decimal price, string name = null);
 		static int CategoryId { get; set; }
+		decimal Price { get; set; }
 	}
 }
 
