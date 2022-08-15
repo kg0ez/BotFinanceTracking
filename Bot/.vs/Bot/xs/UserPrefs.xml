@@ -1,45 +1,24 @@
 ﻿<Properties StartupConfiguration="{BDCC07A8-A200-4401-81DA-F62DA16BD023}|Default">
   <MonoDevelop.Ide.ItemProperties.Bot PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Bot/Helper/Handler/MessageHendler.cs">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Bot.BusinessLogic/Services/Implementations/OperationService.cs">
     <Files>
-      <File FileName="Bot/Helper/Handler/MessageHendler.cs" Line="126" Column="18" />
-      <File FileName="Bot/Controllers/BotController.cs" Line="66" Column="90" />
-      <File FileName="Bot/Helper/Handler/CategoryButtonHendler.cs" Line="20" Column="14" />
-      <File FileName="Bot.Common/Enums/OperationType.cs" Line="1" Column="1" />
-      <File FileName="Bot.BusinessLogic/Services/Implementations/OperationService.cs" Line="12" Column="1" />
-      <File FileName="Bot.BusinessLogic/Services/Implementations/CategoryService.cs" Line="38" Column="16" />
-      <File FileName="Bot.BusinessLogic/Services/Interfaces/ICategoryService.cs" Line="13" Column="27" />
-      <File FileName="Bot/Services/Implementations/ButtonService.cs" Line="1" Column="1" />
-      <File FileName="Bot.BusinessLogic/Services/Interfaces/IOperationService.cs" Line="12" Column="1" />
+      <File FileName="Bot/Program.cs" Line="34" Column="1" />
+      <File FileName="Bot/Helper/Handler/MessageHendler.cs" Line="136" Column="1" />
+      <File FileName="Bot/Controllers/BotController.cs" Line="33" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Interfaces/ICurrencyService.cs" Line="6" Column="10" />
+      <File FileName="Bot.BusinessLogic/Services/Implementations/CurrencyService.cs" Line="21" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Implementations/ErrorService.cs" Line="10" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Implementations/CategoryService.cs" Line="14" Column="79" />
+      <File FileName="Bot.BusinessLogic/Services/Implementations/OperationService.cs" Line="1" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Interfaces/IOperationService.cs" Line="1" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Interfaces/IErrorService.cs" Line="1" Column="1" />
+      <File FileName="Bot.BusinessLogic/Services/Interfaces/ICategoryService.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Bot" expanded="True">
-            <Node name="Business Logic" expanded="True">
-              <Node name="Bot.BusinessLogic" expanded="True">
-                <Node name="Services" expanded="True">
-                  <Node name="Implementations" expanded="True" />
-                  <Node name="Interfaces" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-            <Node name="Common" expanded="True">
-              <Node name="Bot.Common" expanded="True">
-                <Node name="Dto" expanded="True" />
-                <Node name="Enums" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="Bot" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Helper" expanded="True">
-                <Node name="Handler" expanded="True" />
-              </Node>
-              <Node name="Services" expanded="True">
-                <Node name="Implementations" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
+          <Node name="Bot" expanded="True" selected="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -48,9 +27,10 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/kirill/Desktop/BotFinanceTracking/Bot/Bot/Helper/Handler/MessageHendler.cs" relfile="Bot/Helper/Handler/MessageHendler.cs" line="136" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
